@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0;
+}
+
+.main-div {
+  height: 100vh;
+  position: relative;
+}
+
+.yellow-blob {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.blue-blob {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+}

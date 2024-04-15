@@ -5,10 +5,12 @@ import Quiz from '../Quiz/Quiz'
 
 function App() {
 
+  const [screenNav, setScreenNav] = useState(false)
+  
   return (
-    <div>
-      <Quiz />
-    </div>
+    <>
+        {screenNav ? <Quiz /> : <Start />}
+    </>
   )
 }
 
