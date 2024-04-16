@@ -60,3 +60,7 @@ body {
   border-radius: 1em;
   margin-top: 1.5em;
 }
+
+.start-btn:active {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
