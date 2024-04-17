@@ -6,10 +6,14 @@ import Quiz from '../Quiz/Quiz'
 function App() {
 
   const [screenNav, setScreenNav] = useState(false)
+
+  function startSelected() {
+    setScreenNav(true)
+  }
   
   return (
     <>
-        {screenNav ? <Quiz /> : <Start />}
+        {screenNav ? <Quiz /> : <Start buttonSelect={startSelected} />}
     </>
   )
 }

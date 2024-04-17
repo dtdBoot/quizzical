@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.quiz-container {
+  padding: 1px;
+  height: 100vh;
+}
+
+.yellow-blob-quiz {
+  position: absolute;
+  right: 0;
+  transform: translate(0, -20%);
+}
+
+.blue-blob-quiz {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translate(-20%, 30%);
+}

@@ -1,0 +1,40 @@
+
+.question-container {
+  max-width: 600px;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.question-text {
+  font-family: "karla", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.question-text,
+.answer-btn {
+  color: #293264;
+}
+
+.answer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #DBDEF0;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
+
+.answer-btn {
+  font-weight: 500;
+  font-size: 0.875rem;
+  background-color: white;
+  padding: 0.5em 2em;
+  border: 1px solid #4D5B9E;
+  border-radius: 12px;
+}
+
+.selected {
+  color: red;
+}
