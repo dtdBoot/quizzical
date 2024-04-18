@@ -5,12 +5,15 @@ import Question from "../Question/Question"
 export default function Quiz() {
   const [questions, setQuestions] = useState([])
   const [selectedAnswers, setSelectedAnswers] = useState({})
-
-  const selectAnswer1 = (answer, question) => {
-    selectAnswer(answer, question)
-  }
+  const [show, setShow] = useState(false)
+  const [score, setScore] = useState(0)
+  const [restart, setRestart] = useState(true)
 
   useEffect(function() {
+    setQuestions([])
+    setSelectedAnswers({})
+    setShow(false)
+    setScore(0)
     fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
     .then(resp => resp.json())
     .then(data => {
@@ -20,15 +23,16 @@ export default function Quiz() {
           question: result["question"],
           correctAnswer: result["correct_answer"],
           incorrectAnswers: result["incorrect_answers"],
-          possibleAnswers: ["1", "2", "3", "4"]
+          possibleAnswers: shuffleArray([result["correct_answer"], ...result["incorrect_answers"]])
         }
       })
       setQuestions(questionObj)
     })
     .catch(error => console.log(error))
-  }, [])
+  }, [restart])
 
   function selectAnswer(answer, question) {
+
       setSelectedAnswers(prev => {
         if (Object.keys(prev).includes(question)) {
           for (let item in prev) {
@@ -37,7 +41,6 @@ export default function Quiz() {
               return prev
             }
           }
-
         } else {
           prev[question] = answer
           return prev
@@ -45,50 +48,58 @@ export default function Quiz() {
       })
   }
 
+  function checkAnswers() {
+    for (let question of questions) {
+      if (selectedAnswers[question.question] === question.correctAnswer) {
+        setScore(prev => prev += 1)
+      }
+    }
+    setShow(true)
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
   const questionEl = questions.map(question => {
-    const selectedAnswer = selectedAnswers[question.question]
-    console.log("Hello")
     return (
       <Question 
         question={question.question}
-        selectAnswer={selectAnswer1}
+        selectAnswer={selectAnswer}
         possibleAnswers={question.possibleAnswers}
+        correctAnswer={question.correctAnswer}
+        showAnswers={show}
       />
     )
   })
 
-  // function answerSelected(question, answer) {
-  //   setSelectedAnswers(prev => {
-  //     prev[question] = answer
-  //     return prev
-  //   })
-  // }
-
-  // let questionEl
-
-  // if(questions && questions.length !== 0) {
-  //    questionEl = questions.map(question => {
-
-  //     const correctAnswer = question["correct_answer"]
-  //     const incorrectAnswer = question["incorrect_answers"]
-  
-  //     const possibleAnswers = [correctAnswer, ...incorrectAnswer]  
-  //    return(
-  //     <Question 
-  //       question={question.question}
-  //       possibleAnswers={possibleAnswers} 
-  //       selectAnswer={answerSelected}
-  //       selectedAnswers={selectedAnswers}
-  //     />
-  //    ) 
-  //   })
-  // }
-
   return (
     <main className="quiz-container">
-      <img className="yellow-blob-quiz" src="/src/assets/blob-5.png" alt="yellow blob" />
-      <img className="blue-blob-quiz" src="/src/assets/blob-6.png" alt="blue blob" />
-      {questionEl}
+      <div className="container">
+        <img className="yellow-blob-quiz" src="/src/assets/blob-5.png" alt="yellow blob" />
+        <img className="blue-blob-quiz" src="/src/assets/blob-6.png" alt="blue blob" />
+        {questionEl}
+        <div className="score-container">
+          {show && <p className="score-text">You Scored {score} / 5</p>}
+
+            {!show && <button
+            className="check-btn" 
+            onClick={() => checkAnswers()}>
+              <p className="check-btn-text">Check Scores</p>
+              </button>}
+
+              {show && <button
+            className="check-btn" 
+            onClick={() => setRestart(prev => !prev)}>
+              <p className="check-btn-text">Play Again</p>
+              </button>}
+
+        </div>
+      </div>
     </main>
   )
 }

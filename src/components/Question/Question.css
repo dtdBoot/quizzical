@@ -36,5 +36,19 @@
 }
 
 .selected {
-  color: red;
+  background-color: #D6DBF5;
+  border-radius: none;
+}
+
+.correct {
+  background-color: #94D7A2;
+}
+
+.false {
+  background-color: #F8BCBC;
+  opacity: 50%;
+}
+
+.nonSelected {
+  opacity: 50%;
 }
