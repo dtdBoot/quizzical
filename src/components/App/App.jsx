@@ -6,6 +6,7 @@ import Quiz from '../Quiz/Quiz'
 function App() {
 
   const [screenNav, setScreenNav] = useState(false)
+  const [data, setData] = useState([])
 
   function startSelected() {
     setScreenNav(true)

@@ -1,15 +1,23 @@
 import React from "react"
 import "./Question.css"
 
-export default function Question({question, possibleAnswers, correctAnswer, selectAnswer, selectedAnswers}) {
+export default function Question({question, selectAnswer, possibleAnswers}) {
 
+  const [userAnswer, setUserAnswer] = React.useState("")
+
+  function updateSelection(answer) {
+    setUserAnswer(answer)
+    selectAnswer(question, answer)
+  }
 
   const answerEl = possibleAnswers.map(answer => {
-    return <button 
-              className={`answer-btn ${selectedAnswers.includes(answer) && "selected"}`}
-              onClick={() => selectAnswer(answer)}>
-                {answer}
-              </button>
+    return (
+      <button 
+        className={`answer-btn ${userAnswer === answer ? "selected" : ""}`}
+        onClick={() => updateSelection(answer)}>
+          {answer}
+      </button>
+    )
   })
 
   return (
